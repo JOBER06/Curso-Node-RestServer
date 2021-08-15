@@ -1,44 +1,44 @@
-const express = require('express');
-const cors = require('cors');
+const express = require("express");
+const cors = require("cors");
 
 //const app = express();
 
-class Server {      //Crear el servidor
-    constructor() {
-        this.app = express();   //Cuando se ejecute el servidor se creara la aplicacion de express como una propiedad.
+class Server {
+  //Crear el servidor
+  constructor() {
+    this.app = express(); //Cuando se ejecute el servidor se creara la aplicacion de express como una propiedad.
 
-        this.port = process.env.PORT;   //Para definir el puerto y especificarlo de manera mas facil
-        
-        this.usuariosPath = '/api/usuarios';
+    this.port = process.env.PORT; //Para definir el puerto y especificarlo de manera mas facil
 
-        ///MIDDLEWARES
-        this.middlewares();
+    this.usuariosPath = "/api/usuarios";
 
-        //Ritas de mi aplicacion
-        this.routes();  //Cuando se ejecute despues manda a llamar el metodo rutas
-    }
+    ///MIDDLEWARES
+    this.middlewares();
 
-    middlewares() {
-        //Cors
-        this.app.use( cors() );
+    //Rutas de mi aplicacion
+    this.routes(); //Cuando se ejecute despues manda a llamar el metodo rutas
+  }
 
-        // Lectura y Parseo del body
-        this.app.use( express.json() );
+  middlewares() {
+    //Cors
+    this.app.use(cors());
 
-        //Directorio publico
-        this.app.use( express.static('public') );
-    }
+    // Lectura y Parseo del body
+    this.app.use(express.json());
 
-    routes() {
-        
-        this.app.use(this.usuariosPath, require('../routes/usuarios')); //Path que ahora se va a utilizar
-    }
+    //Directorio publico
+    this.app.use(express.static("public"));
+  }
 
-    listen() {
-        this.app.listen(this.port, () => {
-            console.log('Corriendo en el puerto: ', this.port);
-        });
-    }
+  routes() {
+    this.app.use(this.usuariosPath, require("../routes/usuarios")); //Path que ahora se va a utilizar
+  }
+
+  listen() {
+    this.app.listen(this.port, () => {
+      console.log("Corriendo en el puerto: ", this.port);
+    });
+  }
 }
 
 module.exports = Server;
